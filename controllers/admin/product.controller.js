@@ -1,36 +1,12 @@
 const Product = require("../../models/product.model");
 
-
+const fillerStatusHelpers = require("../../helpers/fillerStatus")
 // [GET] /admin/products
 
 
 module.exports.index = async (req, res) => {
 
-  let filerStatus = [
-    {
-      name: "Tất cả",
-      status: "",
-      class: ""
-    },
-    {
-      name: "Hoạt động",
-      status: "active",
-      class: ""
-    },
-    {
-      name: "Dừng hoạt động",
-      status:"inactive",
-      class: ""
-    }
-  ]
-
-  if(req.query.status) {
-    let index = filerStatus.findIndex(item => item.status == req.query.status)
-    filerStatus[index].class = 'active';
-  }else {
-    const index = filerStatus.findIndex(item => item.status == "")
-    filerStatus[index].class = 'active';
-  }
+  let filerStatus = fillerStatusHelpers(req.query)
 
   let find = {
     deleted: false
